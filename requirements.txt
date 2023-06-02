@@ -25,7 +25,7 @@ prompt-toolkit==3.0.38
 PyJWT==2.7.0
 pytz==2023.3
 requests==2.31.0
-ruamel.yaml==0.17.28
+ruamel.yaml==0.17.31
 ruamel.yaml.clib==0.2.7
 six==1.16.0
 sqlparse==0.4.4
