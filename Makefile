@@ -20,3 +20,4 @@ remig:
 
 search_index:
 	python3 manage.py search_index --rebuild
+

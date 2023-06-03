@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 from .views import (
-    CategoryViewSet, ProductViewSet, SendMail, CardViewSet, LikeViewSet
+    CategoryViewSet, ProductViewSet, SendMail, CardViewSet, LikeViewSet, SearchAPIView
 )
 
 router = DefaultRouter()
@@ -38,6 +38,9 @@ urlpatterns = [
 
     # Send Email
     path('send-email', SendMail.as_view(), name='send_email'),
+
+    # Search
+    path('search/', SearchAPIView.as_view(), name='your-model-list'),
 ]
 
 """

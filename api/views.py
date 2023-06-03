@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, pagination
+from rest_framework import viewsets, permissions, pagination, generics, filters
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -125,10 +125,8 @@ class CardViewSet(viewsets.ModelViewSet):
 
             original_total_price += product['price'] * quantity
             discount_total_price += summ
-
         products_count = len(formatted_data)
         economic_price = original_total_price - discount_total_price
-
         response_data = {
             'data': formatted_data,
             'your_order': {
@@ -225,6 +223,20 @@ class LikeViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=204)
+
+
+class SearchAPIView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        q = self.request.GET.get('q', None)
+        if q:
+            queryset = queryset.filter(name__iexact=q)
+        return queryset
 
 
 class SendMail(APIView):
