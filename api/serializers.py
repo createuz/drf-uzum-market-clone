@@ -20,54 +20,6 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'image')
 
 
-# class ProductSerializer(serializers.ModelSerializer):
-#     comments = CommentSerializer(many=True, read_only=True)
-#     category = CategorySerializer()
-#
-#     class Meta:
-#         model = Product
-#         fields = '__all__'
-# class ProductSerializer(serializers.ModelSerializer):
-#     discount_price = serializers.SerializerMethodField()
-#     color = serializers.SerializerMethodField()
-#     delivery_price = serializers.SerializerMethodField()
-#     short_description = serializers.SerializerMethodField()
-#     description = serializers.SerializerMethodField()
-#     instructions = serializers.SerializerMethodField()
-#     structure = serializers.SerializerMethodField()
-#     dimension = serializers.SerializerMethodField()
-#
-#     class Meta:
-#         model = Product
-#         fields = ['merchant', 'id', 'title', 'price', 'discount_price', 'color', 'delivery_period', 'delivery_price',
-#                   'short_description', 'description', 'instructions', 'structure', 'dimension', 'quantity', 'comments',
-#                   'category']
-#
-#     def get_discount_price(self, obj):
-#         return obj.discount_price if obj.discount_price is not None else None
-#
-#     def get_color(self, obj):
-#         return obj.color if obj.color else None
-#
-#     def get_delivery_price(self, obj):
-#         return obj.delivery_price if obj.delivery_price is not None else None
-#
-#     def get_short_description(self, obj):
-#         return obj.short_description if obj.short_description else None
-#
-#     def get_description(self, obj):
-#         return obj.description if obj.description else None
-#
-#     def get_instructions(self, obj):
-#         return obj.instructions if obj.instructions else None
-#
-#     def get_structure(self, obj):
-#         return obj.structure if obj.structure else None
-#
-#     def get_dimension(self, obj):
-#         return obj.dimension if obj.dimension else None
-
-
 class ProductSerializer(serializers.ModelSerializer):
     discount_price = serializers.SerializerMethodField()
     color = serializers.SerializerMethodField()

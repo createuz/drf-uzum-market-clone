@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import viewsets, permissions, pagination, generics, filters
 from rest_framework.decorators import action
 from rest_framework.views import APIView
@@ -51,39 +52,6 @@ class ProductViewSet(viewsets.ModelViewSet):
             formatted_data.append(product)
 
         return Response(formatted_data)
-
-
-# class ProductViewSet(viewsets.ModelViewSet):
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-#     pagination_class = pagination.LimitOffsetPagination
-#
-#     def get_serializer_class(self):
-#         if self.request.method == 'GET':
-#             return ProductSerializer
-#         elif self.request.method in ['POST', 'PUT', 'PATCH']:
-#             return ProductSerializerForCreate
-#
-#     def get_permissions(self):
-#         if self.action in ['create', 'update', 'partial_update', 'destroy']:
-#             return [permissions.IsAuthenticated()]
-#         return []
-#
-#     @action(detail=False, methods=['GET'])
-#     def next_products(self, request):
-#         products = self.queryset
-#         page = self.paginate_queryset(products)
-#         serializer = self.get_serializer(page, many=True)
-#         return self.get_paginated_response(serializer.data)
-#
-#     @action(detail=True, methods=['POST'])
-#     def add_comment(self, request, pk=None):
-#         product = self.get_object()
-#         serializer = CommentSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save(product=product, user=request.user)
-#         return Response({'message': 'Comment created successfully.'}, status=201)
 
 
 class CardViewSet(viewsets.ModelViewSet):
@@ -229,13 +197,18 @@ class SearchAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    search_fields = ['title', 'description', 'category__name', 'price']
 
     def get_queryset(self):
         queryset = super().get_queryset()
         q = self.request.GET.get('q', None)
         if q:
-            queryset = queryset.filter(name__iexact=q)
+            queryset = queryset.filter(
+                Q(title__icontains=q) |
+                Q(description__icontains=q) |
+                Q(category__name__icontains=q) |
+                Q(price__icontains=q)
+            )
         return queryset
 
 

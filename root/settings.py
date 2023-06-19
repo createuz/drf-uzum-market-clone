@@ -113,12 +113,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'Test3@gmail.com'
-EMAIL_HOST_PASSWORD = 'comezbsituymucre'
+EMAIL_HOST_USER = 'rajabovshohjahono3@gmail.com'
+EMAIL_HOST_PASSWORD = 'piafvvkdzqdixdiu'
 
 CELERY_TIMEZONE = "Asia/Tashkent"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_RESULT_BACKEND = os.getenv("CELERY_BROKER_REDIS_URL", "redis://localhost:6379/0")
-CELERY_BROKER_URL = os.getenv('CELERY_BROKER_REDIS_URL', default='redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
