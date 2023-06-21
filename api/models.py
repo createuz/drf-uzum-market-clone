@@ -1,5 +1,41 @@
+#     def __str__(self):
+#         return self.name
+#
+#
+# class Rating(Model):
+#     user = ForeignKey('auth.User', CASCADE)
+#     product = ForeignKey('Product', CASCADE)
+#     rating = PositiveIntegerField()
+#     created_at = DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.user
+#
+#
+# class Option(Model):
+#     size = CharField(max_length=100)
+#     color = CharField(max_length=100)
+#
+#     def __str__(self):
+#         return self.size
+#
+#
+# class ViewedProduct(Model):
+#     user = ForeignKey('auth.User', CASCADE)
+#     product = ForeignKey('Product', CASCADE)
+#     timestamp = DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.user
+
+
+
+
+from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import ForeignKey, Model, CASCADE, PositiveIntegerField
+from rest_framework.fields import DateTimeField, CharField, FloatField, IntegerField
 
 
 class Category(models.Model):
@@ -77,3 +113,46 @@ class Like(models.Model):
 
     def __str__(self):
         return self.product.title
+
+
+class Rating(Model):
+    user = ForeignKey('auth.User', CASCADE)
+    product = ForeignKey('Product', CASCADE)
+    rating = PositiveIntegerField()
+    created_at = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user
+
+
+class Location(Model):
+    address = CharField(max_length=255)
+    option = CharField(max_length=255)
+    hour = DateTimeField(auto_now_add=True)
+    latitude = FloatField()
+    longitude = FloatField()
+
+    def __str__(self):
+        return self.address
+
+
+class City(Model):
+    name = CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Basket(Model):
+    product = ForeignKey('Product', CASCADE, 'baskets')
+    quantity = IntegerField(default=1)
+    user = ForeignKey('auth.User', on_delete=CASCADE)
+
+    def __str__(self):
+        return self.product
+
+class Order(Model):
+    user = ForeignKey('auth.User', CASCADE)
+    product = ForeignKey(Product, CASCADE, 'order')
+    quantity = IntegerField(default=1)
+

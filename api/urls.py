@@ -1,7 +1,30 @@
+# from django.urls import path, include
+# from rest_framework.routers import DefaultRouter
+#
+# from .views import ProductModelViewSet, CategoryCreateAPIView, ProductDetailRetrieveAPIView, WishListModelViewSet, \
+#     BasketViewSet, ProductSearchAPIView, CommentViewSet, RatingCreateView
+#
+# routers = DefaultRouter()
+#
+# routers.register('product_mixins', ProductModelViewSet, 'product_mixins')
+# routers.register('wishlist_mixins', WishListModelViewSet, 'wishlist_mixins')
+# routers.register('baskets', BasketViewSet, 'baskets')
+# routers.register('comment', CommentViewSet, 'comments')
+#
+# urlpatterns = [
+#
+#     path('category/<int:pk>', CategoryCreateAPIView.as_view()),
+#     path('product_detail/<int:pk>', ProductDetailRetrieveAPIView.as_view()),
+#     path('search/', ProductSearchAPIView.as_view()),
+#     path('ratings/', RatingCreateView.as_view()),
+#     path('', include(routers.urls)),
+# ]
+
+
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 from .views import (
-    CategoryViewSet, ProductViewSet, SendMail, CardViewSet, LikeViewSet, SearchAPIView
+    CategoryViewSet, ProductViewSet, SendMail, CardViewSet, LikeViewSet, SearchAPIView, RatingCreateView
 )
 
 router = DefaultRouter()
@@ -41,6 +64,9 @@ urlpatterns = [
 
     # Search
     path('search/', SearchAPIView.as_view(), name='your-model-list'),
+
+    # ratings
+    path('ratings/', RatingCreateView.as_view()),
 ]
 
 """
